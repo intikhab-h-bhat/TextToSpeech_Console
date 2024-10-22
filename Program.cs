@@ -98,7 +98,9 @@ using TextToSpeech_Console;
 
    // PronunciationEvaluvation objPronun= new PronunciationEvaluvation();
     // Call the pronunciation assessment method
-    await PronunciationEvaluvation.PronunciationAssessmentContinuousWithFile();
+   // await PronunciationEvaluvation.PronunciationAssessmentContinuousWithFile();
+
+    await RealTimeSpeechToText.RecogniseSpeech();
 
     // Keep the console window open
     Console.WriteLine("Press any key to exit...");
