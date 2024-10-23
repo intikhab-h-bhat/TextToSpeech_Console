@@ -100,7 +100,8 @@ using TextToSpeech_Console;
     // Call the pronunciation assessment method
    // await PronunciationEvaluvation.PronunciationAssessmentContinuousWithFile();
 
-    await RealTimeSpeechToText.RecogniseSpeech();
+    //await RealTimeSpeechToText.RecogniseSpeech();
+    await SpeechTranslation.SpeechTrans();
 
     // Keep the console window open
     Console.WriteLine("Press any key to exit...");
