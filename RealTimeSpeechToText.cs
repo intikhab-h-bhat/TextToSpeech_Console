@@ -11,7 +11,7 @@ namespace TextToSpeech_Console
     public class RealTimeSpeechToText
     {
         public static async Task RecogniseSpeech() {
-            var config = SpeechConfig.FromSubscription("Your Resource Key", "eastus");
+            var config = SpeechConfig.FromSubscription("eab6399a341a456aa6849fcd01f9a83e", "eastus");
 
             using (var recognizer = new SpeechRecognizer(config))
             {

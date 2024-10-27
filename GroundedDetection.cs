@@ -29,12 +29,12 @@ namespace TextToSpeech_Console
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //JSON payload as defined in your  example
+                //payload 
                var requestContent = new JObject
                {
                    ["domain"] = "Medical",
                    ["task"] = "Summarization",
-                   ["text"] = "Ms Johnson has been in the hospital after experiencing a fatigue.",
+                   ["text"] = "Ms Johnson has been in the hospital after experiencing a heart attack.",
                    ["groundingSources"] = new JArray
                    {
                         "Our patient, Ms. Johnson, presented with persistent fatigue, unexplained weight loss, and frequent night sweats. After a series of tests, she was diagnosed with Hodgkin’s lymphoma, a type of cancer that affects the lymphatic system. The diagnosis was confirmed through a lymph node biopsy revealing the presence of Reed-Sternberg cells, a characteristic of this disease. She was further staged using PET-CT scans. Her treatment plan includes chemotherapy and possibly radiation therapy, depending on her response to treatment. The medical team remains optimistic about her prognosis given the high cure rate of Hodgkin’s lymphoma."

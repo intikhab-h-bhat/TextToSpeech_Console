@@ -19,10 +19,10 @@ namespace TextToSpeech_Console
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription("Your resource key", "eastus");
+            var config = SpeechConfig.FromSubscription("eab6399a341a456aa6849fcd01f9a83e", "eastus");
 
             // Creates a speech recognizer using file as audio input. 
-            // provide a WAV file as an example. Replace it with your own.
+            // provide a WAV file as an example.
             using (var audioInput = AudioConfig.FromWavFileInput(@"D:\c#-crash-course\TextToSpeech_Console\Test.wav"))
             {
                 var language = "en-US";

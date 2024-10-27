@@ -12,9 +12,9 @@ namespace TextToSpeech_Console
     {
         public static async Task SpeechTrans()
         {
-            var config = SpeechTranslationConfig.FromSubscription("Your subscription key", "eastus");
+            var config = SpeechTranslationConfig.FromSubscription("eab6399a341a456aa6849fcd01f9a83e", "eastus");
             config.SpeechRecognitionLanguage = "en-US";
-            config.AddTargetLanguage("fr");
+            config.AddTargetLanguage("ar");
 
             using (var recognizer = new TranslationRecognizer(config))
             {

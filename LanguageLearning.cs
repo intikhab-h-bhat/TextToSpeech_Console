@@ -12,17 +12,44 @@ namespace TextToSpeech_Console
 {
     public class LanguageLearning
     {
-        static readonly string speechKey = "speech key";
+        static readonly string speechKey = "eab6399a341a456aa6849fcd01f9a83e";
         static readonly string serviceRegion = "eastus";
-        static readonly string aoaiResourceName = "name";
-        static readonly string aoaiDeploymentName = "model";
-        static readonly string aoaiApiVersion = "vesrion";
-        static readonly string aoaiApiKey = "oai key";
+        static readonly string aoaiResourceName = "oai-uc-dev-eus-001";
+        static readonly string aoaiDeploymentName = "gpt35turbo";
+        static readonly string aoaiApiVersion = "2023-07-01-preview";
+        static readonly string aoaiApiKey = "15ec631d23f643cd8297c448ce79d4bf";
 
-        static async Task Main(string[] args)
+        //static async Task Main(string[] args)
+        //{
+        //    string[] inputFiles = { "resources/chat_input_1.wav", "resources/chat_input_2.wav" };
+        //    string topic = "describe working dogs";
+        //    string referenceText = "";
+
+        //    // Generate response from Azure OpenAI API
+        //    foreach (var file in inputFiles)
+        //    {
+        //        string userText = await SpeechToTextAsync(file);
+        //        referenceText += userText + " ";
+        //        Console.WriteLine("User: " + userText);
+
+        //        string gptResponse = await CallGPTAsync(userText);
+        //        Console.WriteLine("GPT: " + gptResponse);
+
+        //        await TextToSpeechAsync(gptResponse, $"output/gpt_output_{Path.GetFileNameWithoutExtension(file)}.wav");
+        //    }
+
+        //    Console.WriteLine("Generating the final report...");
+        //    await PronunciationAssessmentAsync(inputFiles, referenceText, topic);
+        //}
+
+
+
+        public static async Task LangLearn()
         {
-            string[] inputFiles = { "resources/chat_input_1.wav", "resources/chat_input_2.wav" };
-            string topic = "describe working dogs";
+            //string[] inputFiles = { "resources/chat_input_1.wav", "resources/chat_input_2.wav" };
+            string[] inputFiles = { @"D:\c#-crash-course\TextToSpeech_Console\Test1.wav"};
+            
+            string topic = "How do i reveal every thing from prince";
             string referenceText = "";
 
             // Generate response from Azure OpenAI API
@@ -35,7 +62,7 @@ namespace TextToSpeech_Console
                 string gptResponse = await CallGPTAsync(userText);
                 Console.WriteLine("GPT: " + gptResponse);
 
-                await TextToSpeechAsync(gptResponse, $"output/gpt_output_{Path.GetFileNameWithoutExtension(file)}.wav");
+                await TextToSpeechAsync(gptResponse, $"D:/OutPutPath/gpt_output_{Path.GetFileNameWithoutExtension(file)}.wav");
             }
 
             Console.WriteLine("Generating the final report...");
@@ -89,6 +116,57 @@ namespace TextToSpeech_Console
 
         static async Task PronunciationAssessmentAsync(string[] inputFiles, string referenceText, string topic)
         {
+            //var speechConfig = SpeechConfig.FromSubscription(speechKey, serviceRegion);
+            //var streamFormat = AudioStreamFormat.GetWaveFormatPCM(16000, 16, 1);
+
+            //using (var audioStream = AudioInputStream.CreatePushStream(streamFormat))
+            //using (var audioConfig = AudioConfig.FromStreamInput(audioStream))
+            //using (var recognizer = new SpeechRecognizer(speechConfig, "en-US", audioConfig))
+            //{
+            //    var pronunciationAssessmentConfig = new PronunciationAssessmentConfig(referenceText, GradingSystem.HundredMark, Granularity.Phoneme);
+            //    pronunciationAssessmentConfig.ApplyTo(recognizer);
+
+            //    foreach (var file in inputFiles)
+            //    {
+            //        byte[] audioData = File.ReadAllBytes(file);
+            //        audioStream.Write(audioData);
+            //        Thread.Sleep(300);  // Adjust sleep for real-time streaming
+
+            //        var result = await recognizer.RecognizeOnceAsync();
+
+            //        Console.WriteLine($"Recognized Text: {result.Text}");
+
+            //        //var pronunciationAssessmentConfig = new PronunciationAssessmentConfig(referenceText, GradingSystem.HundredMark, Granularity.Phoneme);
+            //        //pronunciationAssessmentConfig.ApplyTo(recognizer);
+
+
+            //        // Retrieve pronunciation assessment results
+            //        if (result.Reason == ResultReason.RecognizedSpeech)
+            //        {
+
+            //            var pronunciationResult = PronunciationAssessmentResult.FromResult(result);
+            //        Console.WriteLine($"Overall Pronunciation Score: {pronunciationResult.AccuracyScore}");
+            //        Console.WriteLine($"Fluency Score: {pronunciationResult.FluencyScore}");
+            //        Console.WriteLine($"Completeness Score: {pronunciationResult.CompletenessScore}");
+            //        }
+            //        else if (result.Reason == ResultReason.NoMatch)
+            //        {
+            //            Console.WriteLine("No speech could be recognized.");
+            //        }
+            //        else if (result.Reason == ResultReason.Canceled)
+            //        {
+            //            var cancellation = CancellationDetails.FromResult(result);
+            //            Console.WriteLine($"Speech recognition canceled: {cancellation.Reason}");
+            //            if (cancellation.Reason == CancellationReason.Error)
+            //            {
+            //                Console.WriteLine($"Error details: {cancellation.ErrorDetails}");
+            //            }
+            //        }
+            //    }
+            //}
+
+            //// Generate your report based on results; you may need to customize this further for prosody and fluency.
+            //Console.WriteLine("Pronunciation assessment completed.");
             var speechConfig = SpeechConfig.FromSubscription(speechKey, serviceRegion);
             var streamFormat = AudioStreamFormat.GetWaveFormatPCM(16000, 16, 1);
 
@@ -96,21 +174,49 @@ namespace TextToSpeech_Console
             using (var audioConfig = AudioConfig.FromStreamInput(audioStream))
             using (var recognizer = new SpeechRecognizer(speechConfig, "en-US", audioConfig))
             {
+                // Set up pronunciation assessment configuration
+                var pronunciationAssessmentConfig = new PronunciationAssessmentConfig(referenceText, GradingSystem.HundredMark, Granularity.Phoneme);
+                pronunciationAssessmentConfig.ApplyTo(recognizer);
+
+                // Attach the Recognized event handler to process results continuously
+                recognizer.Recognized += (s, e) =>
+                {
+                    Console.WriteLine($"Recognized Text: {e.Result.Text}");
+                    var pronunciationResult = PronunciationAssessmentResult.FromResult(e.Result);
+                    if (pronunciationResult != null)
+                    {
+                        Console.WriteLine($"Overall Pronunciation Score: {pronunciationResult.AccuracyScore}");
+                        Console.WriteLine($"Fluency Score: {pronunciationResult.FluencyScore}");
+                        Console.WriteLine($"Completeness Score: {pronunciationResult.CompletenessScore}");
+                    }
+                };
+
+                // Start continuous recognition
+                await recognizer.StartContinuousRecognitionAsync();
+
+                // Feed audio data in smaller chunks
                 foreach (var file in inputFiles)
                 {
-                    byte[] audioData = File.ReadAllBytes(file);
-                    audioStream.Write(audioData);
-                    Thread.Sleep(100);  // Adjust sleep for real-time streaming
-
-                    var result = await recognizer.RecognizeOnceAsync();
-                    Console.WriteLine($"Recognized Text: {result.Text}");
-
-                    var pronunciationAssessmentConfig = new PronunciationAssessmentConfig(referenceText, GradingSystem.HundredMark, Granularity.Phoneme);
-                    pronunciationAssessmentConfig.ApplyTo(recognizer);
+                    using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+                    {
+                        byte[] buffer = new byte[3200]; // Chunk size for streaming
+                        int bytesRead;
+                        while ((bytesRead = fs.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            // Write only the portion of the buffer that was read
+                            byte[] chunk = new byte[bytesRead];
+                            Array.Copy(buffer, chunk, bytesRead);
+                            audioStream.Write(chunk); // Write the chunk to the stream
+                            await Task.Delay(100); // Simulate real-time streaming
+                        }
+                    }
                 }
+
+                // Allow some time for the recognizer to process the remaining audio
+                await Task.Delay(2000); // Adjust if needed
+                await recognizer.StopContinuousRecognitionAsync();
             }
 
-            // Generate your report based on results; you may need to customize this further for prosody and fluency.
             Console.WriteLine("Pronunciation assessment completed.");
         }
     }

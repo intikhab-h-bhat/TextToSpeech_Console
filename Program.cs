@@ -98,7 +98,7 @@ using TextToSpeech_Console;
 
 //PronunciationEvaluvation objPronun = new PronunciationEvaluvation();
 ////Call the pronunciation assessment method
-// await PronunciationEvaluvation.PronunciationAssessmentContinuousWithFile();
+//await PronunciationEvaluvation.PronunciationAssessmentContinuousWithFile();
 
 //await RealTimeSpeechToText.RecogniseSpeech();
 //await SpeechTranslation.SpeechTrans();
@@ -106,9 +106,12 @@ using TextToSpeech_Console;
 
 //Groundedness detection
 // Call the function to analyze groundedness
-var groundednessScore = await GroundedDetection.DetectGroundednessAsync();
-Console.WriteLine($"Groundedness Score: {groundednessScore}");
+//var groundednessScore = await GroundedDetection.DetectGroundednessAsync();
+//Console.WriteLine($"Groundedness Score: {groundednessScore}");
 
+
+
+await LanguageLearning.LangLearn();
 
 
 
