@@ -3,3 +3,4 @@
  2. Speect to Text
  3. Speech Translation
  4. Conversation (Chating)
+ 5. Immersive Readere
